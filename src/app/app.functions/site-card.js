@@ -21,7 +21,7 @@ exports.main = async (context = {}, sendResponse) => {
     //.crm.contacts.basicApi.getById(hs_object_id)
     .apiRequest({
       method: 'GET',
-      path: `/crm/v4/objects/contacts/51/associations/companies`,
+      path: `/crm/v4/objects/contacts/${hs_object_id}/associations/companies`,
     })
     .then(contactData => {
       let data = contactData.results;
