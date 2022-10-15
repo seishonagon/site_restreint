@@ -24,7 +24,7 @@ exports.main = async (context = {}, sendResponse) => {
       path: `/crm/v4/objects/contacts/51/associations/companies`,
     })
     .then(contactData => {
-      let data = contactData;
+      let data = contactData.results;
       console.log(data);
       // const email = contactData.properties.email;
       sendResponse({
