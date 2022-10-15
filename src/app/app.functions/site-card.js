@@ -18,11 +18,15 @@ exports.main = async (context = {}, sendResponse) => {
   // Defines the first section of the CRM card
   // Defines variables for API endpoint and response data
   hubspotClient.crm.contacts.basicApi
-    .getById(hs_object_id)
+    // .getById(hs_object_id)
+    .apiRequest({
+      method: 'GET',
+      path:`/crm/v4/objects/contacts/51/associations/companies`,
+    })
     .then(contactData => {
       let data = contactData;
       console.log(data);
-      const email = contactData.properties.email;
+      // const email = contactData.properties.email;
       sendResponse({
         sections: [{
             type: "heading",
