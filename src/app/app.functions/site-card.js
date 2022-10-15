@@ -28,7 +28,7 @@ exports.main = async (context = {}, sendResponse) => {
         },
         {
           type: "text",
-          text: "This card will retrieve data on the contact record."
+          text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}`
         },
         {
           type: "text",
