@@ -1,0 +1,15 @@
+{
+  "name": "Site Restreint",
+  "description": "Une extension carte qui permet de limiter l'acces aux sites de l'entreprise primaire.",
+  "scopes": ["crm.objects.contacts.read", "crm.objects.contacts.write"],
+  "public": false,
+  "extensions": {
+    "crm": {
+      "cards": [
+        {
+          "file": "./site-card.json"
+        }
+      ]
+    }
+  }
+}

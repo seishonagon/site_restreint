@@ -1,0 +1,16 @@
+{
+  "type": "crm-card",
+  "data": {
+    "title": "Site Restreint",
+    "location": "crm.record.sidebar",
+    "fetch": {
+      "targetFunction": "crm-card",
+      "objectTypes": [
+        {
+          "name": "contacts",
+          "propertiesToSend": ["hs_object_id", "firstname", "lastname", "site", "specialite_du_site"]
+        }
+      ]
+    }
+  }
+}
