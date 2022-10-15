@@ -6,50 +6,47 @@ const hubspot = require('@hubspot/api-client');
 exports.main = async (context = {}, sendResponse) => {
   // Store contact info, configured as propertiesToSend in crm-card.json
   const { hs_object_id, firstname, lastname, site, specialite_du_site } = context.propertiesToSend;
-  
+
   // instantiate HubSpot Node API client
   const hubspotClient = new hubspot.Client({
     accessToken: context.secrets.PRIVATE_APP_ACCESS_TOKEN,
   });
 
   // Defines the first section of the CRM card
+  // Defines variables for API endpoint and response data
+  const resp = await hubspotClient.crm.contacts.basicApi.getById(hs_object_id);
+  const email = resp.properties.email
 
-  try {
-    // Defines variables for API endpoint and response data
-    const resp = await hubspotClient.crm.contacts.basicApi.getById(hs_object_id);
-    const email = resp.properties.email
-    
-    // const associatedCompanies = await hubspotClient
-    // .apiRequest({
-    //   method: 'GET',
-    //   path: `/crm/v4/objects/contacts/51/associations/companies`,
-    //   }
-    // );
-    // const companyId = associatedCompanies.body[0].id;
-    // Defines how the returned data will be displayed
-    sendResponse({
-      sections: [
-        {
-          type: "heading",
-          text: "Sample project custom CRM card"
-        },
-        {
-          type: "text",
-          text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
-        },
-        {
-          type: "text",
-          format: "markdown",
-          text: "This serverless function will retrieve a specific contact by ID."
-        },
-        {
-          type: "text",
-          format: "markdown",
-          text: `This contact's email is **${email}**`
-        },
-      ]
+  const associatedCompanies = await hubspotClient
+    .apiRequest({
+      method: 'GET',
+      path: `/crm/v4/objects/contacts/51/associations/companies`,
     });
-  } catch (error) {
-    console.error(error);
-  }
+    
+  const companyId = associatedCompanies.body[0].id;
+  // Defines how the returned data will be displayed
+  sendResponse({
+    sections: [{
+        type: "heading",
+        text: "Sample project custom CRM card"
+      },
+      {
+        type: "text",
+        text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
+      },
+      {
+        type: "text",
+        format: "markdown",
+        text: "This serverless function will retrieve a specific contact by ID."
+      },
+      {
+        type: "text",
+        format: "markdown",
+        text: `This contact's email is **${email}**`
+      },
+    ]
+  });
+} catch (error) {
+  console.error(error);
+}
 };
