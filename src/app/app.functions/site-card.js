@@ -30,9 +30,7 @@ exports.main = async (context = {}, sendResponse) => {
       // path: `/crm/v4/objects/contacts/${hs_object_id}/associations/companies`,
       path: `/crm/v3/objects/contacts`,
     });
-const json = await response.json()
-
-  let data = contactData.results;
+    const json = await response.json()
   console.log(json);
   // const email = contactData.properties.email;
   sendResponse({
