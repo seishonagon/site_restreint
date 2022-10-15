@@ -23,6 +23,27 @@ exports.main = async (context = {}, sendResponse) => {
       let data = response.results;
       console.log(data);
       const email = response.properties.email;
+      sendResponse({
+        sections: [{
+            type: "heading",
+            text: "Sample project custom CRM card"
+          },
+          {
+            type: "text",
+            text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
+          },
+          {
+            type: "text",
+            format: "markdown",
+            text: "This serverless function will retrieve a specific contact by ID."
+          },
+          {
+            type: "text",
+            format: "markdown",
+            text: `This contact's email is **${email}**`
+          },
+        ]
+      });
     });
 
   // hubspotClient
@@ -58,25 +79,5 @@ exports.main = async (context = {}, sendResponse) => {
   //       });
   //     }
   //   );
-  sendResponse({
-    sections: [{
-        type: "heading",
-        text: "Sample project custom CRM card"
-      },
-      {
-        type: "text",
-        text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
-      },
-      {
-        type: "text",
-        format: "markdown",
-        text: "This serverless function will retrieve a specific contact by ID."
-      },
-      {
-        type: "text",
-        format: "markdown",
-        text: `This contact's email is **${email}**`
-      },
-    ]
-  });
+  
 };
