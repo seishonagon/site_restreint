@@ -16,7 +16,7 @@ exports.main = async (context = {}, sendResponse) => {
 
   try {
     // Defines variables for API endpoint and response data
-    const resp = await hubspotClient.crm.contacts.basicApi.getById('51');
+    const resp = await hubspotClient.crm.contacts.basicApi.getById(hs_object_id);
     const email = resp.properties.email
     
     // Defines how the returned data will be displayed
