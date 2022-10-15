@@ -27,8 +27,8 @@ exports.main = async (context = {}, sendResponse) => {
     //.crm.contacts.basicApi.getById(hs_object_id)
     .apiRequest({
       method: 'GET',
-      path: `/crm/v4/objects/contacts/${hs_object_id}/associations/companies`,
-      // path: `/crm/v3/objects/contacts`,
+      // path: `/crm/v4/objects/contacts/${hs_object_id}/associations/companies`,
+      path: `/crm/v3/objects/contacts`,
     })
     .then (response => {
       const json = await response.json()
