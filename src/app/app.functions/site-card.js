@@ -23,7 +23,9 @@ exports.main = async (context = {}, sendResponse) => {
       path: `/crm/v4/objects/contacts/51/associations/companies`,
     })
     .then(associatedCompanies => {
-        let companyId = associatedCompanies.body.results[0].id;
+        console.log(`Output is $(associatedCompanies)`)
+        let companyId = associatedCompanies.results[0].toObjectId;
+        
         // Defines how the returned data will be displayed
         sendResponse({
           sections: [{
