@@ -17,7 +17,7 @@ exports.main = async (context = {}, sendResponse) => {
     path: '/crm/v3/objects/contacts',
   })
   const json = await response.json()
-  console.log(json)
+  console.log(json.results.properties)
 
   // const response = await hubspotClient
   //   //.crm.contacts.basicApi.getById(hs_object_id)
