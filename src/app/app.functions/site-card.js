@@ -5,50 +5,74 @@ const hubspot = require('@hubspot/api-client');
 
 exports.main = async (context = {}, sendResponse) => {
   // Store contact info, configured as propertiesToSend in crm-card.json
-  const { hs_object_id, firstname, lastname, site, specialite_du_site } = context.propertiesToSend;
-  
+  const { hs_object_id, firstname, lastname } = context.propertiesToSend;
+
   // instantiate HubSpot Node API client
   const hubspotClient = new hubspot.Client({
     accessToken: context.secrets.PRIVATE_APP_ACCESS_TOKEN,
   });
 
-  // Defines the first section of the CRM card
+  const response = await hubspotClient.apiRequest({
+    method: 'get',
+    path: '/crm/v3/objects/contacts',
+  })
+  const json = await response.json()
+  console.log(json.results[0].properties)
 
-  try {
-    // Defines variables for API endpoint and response data
-    const resp = await hubspotClient.crm.contacts.basicApi.getById(hs_object_id);
-    const email = resp.properties.email
-    // const associatedCompanies = await hubspotClient
-    // .apiRequest({
-    //   method: 'GET',
-    //   path: `/crm/v4/objects/contacts/51/associations/companies`,
-    //   }
-    // );
-    // const companyId = associatedCompanies.body[0].id;
-    // Defines how the returned data will be displayed
-    sendResponse({
-      sections: [
-        {
-          type: "heading",
-          text: "Sample project custom CRM card"
-        },
-        {
-          type: "text",
-          text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
-        },
-        {
-          type: "text",
-          format: "markdown",
-          text: "This serverless function will retrieve a specific contact by ID."
-        },
-        {
-          type: "text",
-          format: "markdown",
-          text: `This contact's email is **${email}**`
-        },
-      ]
-    });
-  } catch (error) {
-    console.error(error);
-  }
+  // const response = await hubspotClient
+  //   //.crm.contacts.basicApi.getById(hs_object_id)
+  //   .apiRequest({
+  //     method: 'GET',
+  //     // path: `/crm/v4/objects/contacts/${hs_object_id}/associations/companies`,
+  //     path: `/crm/v3/objects/contacts`,
+  //   })
+  //   .then (response => {
+  //     const json = response.json()
+  //     const email = json.properties.email
+  //     sendResponse({
+  //       sections: [{
+  //           type: "heading",
+  //           text: "Sample project custom CRM card"
+  //         },
+  //         {
+  //           type: "text",
+  //           text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
+  //         },
+  //         {
+  //           type: "text",
+  //           format: "markdown",
+  //           text: "This serverless function will retrieve a specific contact by ID."
+  //         },
+  //         {
+  //           type: "text",
+  //           format: "markdown",
+  //           text: `This contact's email is **${email}**`
+  //         },
+  //       ]
+  //     });
+  //   });
+  const email = json.results[0].properties.email
+  sendResponse({
+    sections: [{
+        type: "heading",
+        text: "Sample project custom CRM card"
+      },
+      {
+        type: "text",
+        text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
+      },
+      {
+        type: "text",
+        format: "markdown",
+        text: "This serverless function will retrieve a specific contact by ID."
+      },
+      {
+        type: "text",
+        format: "markdown",
+        text: `This contact's email is **${email}**`
+      },
+    ]
+  });
+  console.log(json);
+
 };
