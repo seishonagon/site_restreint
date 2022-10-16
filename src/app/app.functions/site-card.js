@@ -28,6 +28,7 @@ exports.main = async (context = {}, sendResponse) => {
     })
     .then (response => {
       const json = response.json()
+      const email = json.properties.email
       sendResponse({
         sections: [{
             type: "heading",
