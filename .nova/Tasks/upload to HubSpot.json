@@ -1,8 +1,0 @@
-{
-  "actions" : {
-    "build" : {
-      "script" : "\/opt\/homebrew\/bin\/hs project upload"
-    }
-  },
-  "openLogOnRun" : "start"
-}
