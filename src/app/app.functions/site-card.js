@@ -17,7 +17,7 @@ exports.main = async (context = {}, sendResponse) => {
     path: '/crm/v3/objects/contacts',
   })
   const json = await response.json()
-  console.log(json.results.properties)
+  console.log(json.results[0].properties)
 
   // const response = await hubspotClient
   //   //.crm.contacts.basicApi.getById(hs_object_id)
@@ -51,7 +51,7 @@ exports.main = async (context = {}, sendResponse) => {
   //       ]
   //     });
   //   });
-  const email = json.properties.email
+  const email = json.results[0].properties.email
   sendResponse({
     sections: [{
         type: "heading",
