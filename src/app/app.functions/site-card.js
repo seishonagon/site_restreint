@@ -18,11 +18,7 @@ exports.main = async (context = {}, sendResponse) => {
   //   })
   //   const json = await response.json()
   //   console.log(json)
-
-  let data = '';
-  let email = '';
-  // Defines the first section of the CRM card
-  // Defines variables for API endpoint and response data
+ 
   const response = await hubspotClient
     //.crm.contacts.basicApi.getById(hs_object_id)
     .apiRequest({
@@ -31,8 +27,7 @@ exports.main = async (context = {}, sendResponse) => {
       path: `/crm/v3/objects/contacts`,
     })
     .then (response => {
-      const json = await response.json()
-      
+      const json = response.json()
       sendResponse({
         sections: [{
             type: "heading",
@@ -57,42 +52,5 @@ exports.main = async (context = {}, sendResponse) => {
     });
     
   console.log(json);
-  // const email = contactData.properties.email;
   
-
-
-  // hubspotClient
-  //   .apiRequest({
-  //     method: 'GET',
-  //     path: `/crm/v4/objects/contacts/51/associations/companies`,
-  //   })
-  //   .then(associatedCompanies => {
-  //       console.log(associatedCompanies.body.results);
-  //       let companyId = associatedCompanies.body.results[0].toObjectId;
-  //       
-  //       // Defines how the returned data will be displayed
-  //       sendResponse({
-  //         sections: [{
-  //             type: "heading",
-  //             text: "Sample project custom CRM card"
-  //           },
-  //           {
-  //             type: "text",
-  //             text: `This card will retrieve data on the contact record. It is attached to contact id ${hs_object_id}.`
-  //           },
-  //           {
-  //             type: "text",
-  //             format: "markdown",
-  //             text: "This serverless function will retrieve a specific contact by ID."
-  //           },
-  //           {
-  //             type: "text",
-  //             format: "markdown",
-  //             text: `This contact's email is **${email}**`
-  //           },
-  //         ]
-  //       });
-  //     }
-  //   );
-
 };
